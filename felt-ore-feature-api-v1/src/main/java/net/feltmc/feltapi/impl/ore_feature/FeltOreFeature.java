@@ -1,10 +1,13 @@
 package net.feltmc.feltapi.impl.ore_feature;
 
 import com.mojang.serialization.Codec;
-import net.feltmc.feltapi.api.ore_feature.v1.FeltRuleTest;
+import it.unimi.dsi.fastutil.objects.Object2ObjectLinkedOpenHashMap;
+import net.feltmc.feltapi.api.ore_feature.v1.FeltBlockStateFunction;
+import net.feltmc.feltapi.api.ore_feature.v1.WorldGenVanillaOre;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.core.SectionPos;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
@@ -14,26 +17,30 @@ import net.minecraft.world.level.chunk.LevelChunkSection;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
+
 import java.util.BitSet;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.function.Function;
 
-public class FeltOreFeature extends Feature<FeltOreFeatureConfig> {
+public class FeltOreFeature extends Feature<NoneFeatureConfiguration> {
     public static final FeltOreFeature ORE = Registry.register(Registry.FEATURE, "feltapi:ore", new FeltOreFeature());
-    public FeltOreFeature(Codec<FeltOreFeatureConfig> configCodec) {
-        super(configCodec);
-    }
+    public static final Map<ResourceLocation, WorldGenVanillaOre> WORLD_GEN_VANILLA_ORE_MAP = new Object2ObjectLinkedOpenHashMap<>();
+    //public static final Registry<WorldGenVanillaOre> VANILLA_ORE_REGISTRY = Regis
 
     public FeltOreFeature() {
-        this(FeltOreFeatureConfig.CODEC);
+        super(NoneFeatureConfiguration.CODEC);
     }
 
     @Override
-    public boolean place(FeaturePlaceContext<FeltOreFeatureConfig> context) {
-        RandomSource random = context.random();
+    public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> context) {
+        return false;
+        /*RandomSource random = context.random();
         BlockPos blockpos = context.origin();
         WorldGenLevel structureWorldAccess = context.level();
         FeltOreFeatureConfig config = context.config();
-        return generate(structureWorldAccess, random, blockpos, config);
+        return generate(structureWorldAccess, random, blockpos, config);*/
     }
 
     public boolean generate(WorldGenLevel structureWorldAccess, RandomSource random, BlockPos blockpos, FeltOreFeatureConfig config) {
@@ -176,7 +183,7 @@ public class FeltOreFeature extends Feature<FeltOreFeatureConfig> {
     public boolean placeOre(int x, int y, int z, LevelChunkSection chunkSection, BulkSectionAccess chunkSectionCache, RandomSource random, BlockPos.MutableBlockPos mutable, FeltOreFeatureConfig config){
         BlockState blockState = chunkSection.getBlockState(x, y, z);
 
-        FeltRuleTest target = config.targets;
+        FeltBlockStateFunction target = config.targets;
         BlockState oreToPlace = target.test(blockState, random);
         if (oreToPlace != null && shouldPlace(chunkSectionCache::getBlockState, random, config, mutable)) {
             chunkSection.setBlockState(x, y, z, oreToPlace, false);

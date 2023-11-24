@@ -1,7 +1,7 @@
 package net.feltmc.feltapi.impl.ore_feature;
 
 import com.google.common.base.Preconditions;
-import net.feltmc.feltapi.api.ore_feature.v1.FeltRuleTest;
+import net.feltmc.feltapi.api.ore_feature.v1.FeltBlockStateFunction;
 import net.minecraft.core.Holder;
 import net.minecraft.data.BuiltinRegistries;
 import net.minecraft.resources.ResourceKey;
@@ -24,7 +24,7 @@ import java.util.function.Predicate;
 public class OreFeaturesData {
     public static final Map<String, MapWrapper> FEATURE_MAP = new Object2ObjectLinkedOpenHashMap<>();
 
-    public static void createOrePlacedFeature(String domain, String id, FeltRuleTest test, PlacementModifier range, PlacementModifier weight, int size, float discardChance, List<ResourceKey<Level>> dimensions, Predicate<BiomeSelectionContext> filteredBiomes){
+    public static void createOrePlacedFeature(String domain, String id, FeltBlockStateFunction test, PlacementModifier range, PlacementModifier weight, int size, float discardChance, List<ResourceKey<Level>> dimensions, Predicate<BiomeSelectionContext> filteredBiomes){
         FeltOreFeatureConfig config = new FeltOreFeatureConfig(domain, id, test, size, discardChance);
         Holder<ConfiguredFeature<FeltOreFeatureConfig, ?>> configuredFeature = register(domain, id, new ConfiguredFeature<>(FeltOreFeature.ORE, config));
         List<PlacementModifier> list = new ArrayList<>(List.of(BiomeFilter.biome(), InSquarePlacement.spread(), new DimensionalPlacementModifier(dimensions)));

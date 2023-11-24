@@ -2,7 +2,7 @@ package net.feltmc.feltapi.impl.ore_feature;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.feltmc.feltapi.api.ore_feature.v1.FeltRuleTest;
+import net.feltmc.feltapi.api.ore_feature.v1.FeltBlockStateFunction;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.Level;
@@ -18,7 +18,7 @@ public class FeltOreFeatureConfig implements FeatureConfiguration {
             return config.domain;
         }), Codec.STRING.fieldOf("id").forGetter(config -> {
             return config.id;
-        }), FeltRuleTest.CODEC.fieldOf("targets").forGetter((config) -> {
+        }), FeltBlockStateFunction.CODEC.fieldOf("targets").forGetter((config) -> {
             return config.targets;
         }), Codec.intRange(0, 64).fieldOf("size").forGetter((config) -> {
             return config.size;
@@ -26,12 +26,12 @@ public class FeltOreFeatureConfig implements FeatureConfiguration {
             return config.discardOnAirChance;
         })).apply(instance, FeltOreFeatureConfig::new);
     });
-    public final FeltRuleTest targets;
+    public final FeltBlockStateFunction targets;
     private final String domain, id;
     public final int size;
     public final float discardOnAirChance;
 
-    public FeltOreFeatureConfig(String domain, String id, FeltRuleTest targets, int size, float discardOnAirChance) {
+    public FeltOreFeatureConfig(String domain, String id, FeltBlockStateFunction targets, int size, float discardOnAirChance) {
         this.size = size;
         this.targets = targets;
         this.domain = domain;
@@ -40,23 +40,23 @@ public class FeltOreFeatureConfig implements FeatureConfiguration {
     }
 
     public FeltOreFeatureConfig(String domain, String id, BiFunction<BlockState, RandomSource, BlockState> targets, int size, float discardOnAirChance) {
-        this(domain, id, new FeltRuleTest(domain, id, targets), size, discardOnAirChance);
+        this(domain, id, new FeltBlockStateFunction(domain, id, targets), size, discardOnAirChance);
     }
 
     public FeltOreFeatureConfig(String domain, String id, BiFunction<BlockState, RandomSource, BlockState> targets, int size) {
-        this(domain, id, new FeltRuleTest(domain, id, targets), size, 0.0F);
+        this(domain, id, new FeltBlockStateFunction(domain, id, targets), size, 0.0F);
     }
 
-    public FeltOreFeatureConfig(String domain, String id, FeltRuleTest targets, int size) {
+    public FeltOreFeatureConfig(String domain, String id, FeltBlockStateFunction targets, int size) {
         this(domain, id, targets, size, 0.0F);
     }
 
     public FeltOreFeatureConfig(String domain, String id, RuleTest test, BlockState state, int size, float discardOnAirChance) {
-        this(domain, id, new FeltRuleTest(domain, id, test, state), size, discardOnAirChance);
+        this(domain, id, new FeltBlockStateFunction(domain, id, test, state), size, discardOnAirChance);
     }
 
     public FeltOreFeatureConfig(String domain, String id, RuleTest test, BlockState state, int size) {
-        this(domain, id, new FeltRuleTest(domain, id, test, state), size, 0.0F);
+        this(domain, id, new FeltBlockStateFunction(domain, id, test, state), size, 0.0F);
     }
 
     public List<ResourceKey<Level>> getDimensions(){

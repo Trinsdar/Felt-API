@@ -17,50 +17,50 @@ import java.util.function.Predicate;
 
 public class OreFeatures {
     public static void createFilteredOrePlacedFeature(String domain, String id, RuleTest test, BlockState ore, int minY, int maxY, int weight, int size, float discardChance, List<ResourceKey<Level>> dimensions, Predicate<BiomeSelectionContext> filtered){
-        OreFeaturesData.createOrePlacedFeature(domain, id, new FeltRuleTest(domain, id, test, ore), HeightRangePlacement.uniform(VerticalAnchor.absolute(minY), VerticalAnchor.absolute(maxY)), CountPlacement.of(weight), size, discardChance, dimensions, filtered::test);
+        OreFeaturesData.createOrePlacedFeature(domain, id, new FeltBlockStateFunction(domain, id, test, ore), HeightRangePlacement.uniform(VerticalAnchor.absolute(minY), VerticalAnchor.absolute(maxY)), CountPlacement.of(weight), size, discardChance, dimensions, filtered::test);
     }
 
     public static void createOrePlacedFeature(String domain, String id, RuleTest test, BlockState ore, int minY, int maxY, int weight, int size, float discardChance, ResourceKey<Level>... dimensions){
-        OreFeaturesData.createOrePlacedFeature(domain, id, new FeltRuleTest(domain, id, test, ore), HeightRangePlacement.uniform(VerticalAnchor.absolute(minY), VerticalAnchor.absolute(maxY)), CountPlacement.of(weight), size, discardChance, List.of(dimensions), context -> true);
+        OreFeaturesData.createOrePlacedFeature(domain, id, new FeltBlockStateFunction(domain, id, test, ore), HeightRangePlacement.uniform(VerticalAnchor.absolute(minY), VerticalAnchor.absolute(maxY)), CountPlacement.of(weight), size, discardChance, List.of(dimensions), context -> true);
     }
 
     public static void createFilteredOrePlacedFeature(String domain, String id, BlockState test, BlockState ore, int minY, int maxY, int weight, int size, float discardChance, List<ResourceKey<Level>> dimensions, Predicate<BiomeSelectionContext> filtered){
-        OreFeaturesData.createOrePlacedFeature(domain, id, new FeltRuleTest(domain, id, test, ore), HeightRangePlacement.uniform(VerticalAnchor.absolute(minY), VerticalAnchor.absolute(maxY)), CountPlacement.of(weight), size, discardChance, dimensions, filtered::test);
+        OreFeaturesData.createOrePlacedFeature(domain, id, new FeltBlockStateFunction(domain, id, test, ore), HeightRangePlacement.uniform(VerticalAnchor.absolute(minY), VerticalAnchor.absolute(maxY)), CountPlacement.of(weight), size, discardChance, dimensions, filtered::test);
     }
 
     public static void createOrePlacedFeature(String domain, String id, BlockState test, BlockState ore, int minY, int maxY, int weight, int size, float discardChance, ResourceKey<Level>... dimensions){
-        OreFeaturesData.createOrePlacedFeature(domain, id, new FeltRuleTest(domain, id, test, ore), HeightRangePlacement.uniform(VerticalAnchor.absolute(minY), VerticalAnchor.absolute(maxY)), CountPlacement.of(weight), size, discardChance, List.of(dimensions), context -> true);
+        OreFeaturesData.createOrePlacedFeature(domain, id, new FeltBlockStateFunction(domain, id, test, ore), HeightRangePlacement.uniform(VerticalAnchor.absolute(minY), VerticalAnchor.absolute(maxY)), CountPlacement.of(weight), size, discardChance, List.of(dimensions), context -> true);
     }
 
     public static void createFilteredOrePlacedFeature(String domain, String id, BiFunction<BlockState, RandomSource, BlockState> test, int minY, int maxY, int weight, int size, float discardChance, List<ResourceKey<Level>> dimensions, Predicate<BiomeSelectionContext> filtered){
-        OreFeaturesData.createOrePlacedFeature(domain, id, new FeltRuleTest(domain, id, test), HeightRangePlacement.uniform(VerticalAnchor.absolute(minY), VerticalAnchor.absolute(maxY)), CountPlacement.of(weight), size, discardChance, dimensions, filtered::test);
+        OreFeaturesData.createOrePlacedFeature(domain, id, new FeltBlockStateFunction(domain, id, test), HeightRangePlacement.uniform(VerticalAnchor.absolute(minY), VerticalAnchor.absolute(maxY)), CountPlacement.of(weight), size, discardChance, dimensions, filtered::test);
     }
 
     public static void createOrePlacedFeature(String domain, String id, BiFunction<BlockState, RandomSource, BlockState> test, int minY, int maxY, int weight, int size, float discardChance, ResourceKey<Level>... dimensions){
-        OreFeaturesData.createOrePlacedFeature(domain, id, new FeltRuleTest(domain, id, test), HeightRangePlacement.uniform(VerticalAnchor.absolute(minY), VerticalAnchor.absolute(maxY)), CountPlacement.of(weight), size, discardChance, List.of(dimensions), context -> true);
+        OreFeaturesData.createOrePlacedFeature(domain, id, new FeltBlockStateFunction(domain, id, test), HeightRangePlacement.uniform(VerticalAnchor.absolute(minY), VerticalAnchor.absolute(maxY)), CountPlacement.of(weight), size, discardChance, List.of(dimensions), context -> true);
     }
 
     public static void createTrapezoidFilteredOrePlacedFeature(String domain, String id, BiFunction<BlockState, RandomSource, BlockState> test, int minY, int maxY, int weight, int size, float discardChance, List<ResourceKey<Level>> dimensions, Predicate<BiomeSelectionContext> filtered){
-        OreFeaturesData.createOrePlacedFeature(domain, id, new FeltRuleTest(domain, id, test), HeightRangePlacement.triangle(VerticalAnchor.absolute(minY), VerticalAnchor.absolute(maxY)), CountPlacement.of(weight), size, discardChance, dimensions, filtered::test);
+        OreFeaturesData.createOrePlacedFeature(domain, id, new FeltBlockStateFunction(domain, id, test), HeightRangePlacement.triangle(VerticalAnchor.absolute(minY), VerticalAnchor.absolute(maxY)), CountPlacement.of(weight), size, discardChance, dimensions, filtered::test);
     }
 
     public static void createTrapezoidOrePlacedFeature(String domain, String id, BiFunction<BlockState, RandomSource, BlockState> test, int minY, int maxY, int weight, int size, float discardChance, ResourceKey<Level>... dimensions){
-        OreFeaturesData.createOrePlacedFeature(domain, id, new FeltRuleTest(domain, id, test), HeightRangePlacement.triangle(VerticalAnchor.absolute(minY), VerticalAnchor.absolute(maxY)), CountPlacement.of(weight), size, discardChance, List.of(dimensions), context -> true);
+        OreFeaturesData.createOrePlacedFeature(domain, id, new FeltBlockStateFunction(domain, id, test), HeightRangePlacement.triangle(VerticalAnchor.absolute(minY), VerticalAnchor.absolute(maxY)), CountPlacement.of(weight), size, discardChance, List.of(dimensions), context -> true);
     }
 
     public static void createTrapezoidFilteredOrePlacedFeature(String domain, String id, RuleTest test, BlockState ore, int minY, int maxY, int weight, int size, float discardChance, List<ResourceKey<Level>> dimensions, Predicate<BiomeSelectionContext> filtered){
-        OreFeaturesData.createOrePlacedFeature(domain, id, new FeltRuleTest(domain, id, test, ore), HeightRangePlacement.triangle(VerticalAnchor.absolute(minY), VerticalAnchor.absolute(maxY)), CountPlacement.of(weight), size, discardChance, dimensions, filtered::test);
+        OreFeaturesData.createOrePlacedFeature(domain, id, new FeltBlockStateFunction(domain, id, test, ore), HeightRangePlacement.triangle(VerticalAnchor.absolute(minY), VerticalAnchor.absolute(maxY)), CountPlacement.of(weight), size, discardChance, dimensions, filtered::test);
     }
 
     public static void createTrapezoidOrePlacedFeature(String domain, String id, RuleTest test, BlockState ore, int minY, int maxY, int weight, int size, float discardChance, ResourceKey<Level>... dimensions){
-        OreFeaturesData.createOrePlacedFeature(domain, id, new FeltRuleTest(domain, id, test, ore), HeightRangePlacement.triangle(VerticalAnchor.absolute(minY), VerticalAnchor.absolute(maxY)), CountPlacement.of(weight), size, discardChance, List.of(dimensions), context -> true);
+        OreFeaturesData.createOrePlacedFeature(domain, id, new FeltBlockStateFunction(domain, id, test, ore), HeightRangePlacement.triangle(VerticalAnchor.absolute(minY), VerticalAnchor.absolute(maxY)), CountPlacement.of(weight), size, discardChance, List.of(dimensions), context -> true);
     }
 
     public static void createFilteredOrePlacedFeature(String domain, String id, BiFunction<BlockState, RandomSource, BlockState> test, PlacementModifier range, PlacementModifier weight, int size, float discardChance, List<ResourceKey<Level>> dimensions, Predicate<BiomeSelectionContext> filtered){
-        OreFeaturesData.createOrePlacedFeature(domain, id, new FeltRuleTest(domain, id, test), range, weight, size, discardChance, dimensions, filtered);
+        OreFeaturesData.createOrePlacedFeature(domain, id, new FeltBlockStateFunction(domain, id, test), range, weight, size, discardChance, dimensions, filtered);
     }
 
     public static void createOrePlacedFeature(String domain, String id, BiFunction<BlockState, RandomSource, BlockState> test, PlacementModifier range, PlacementModifier weight, int size, float discardChance, ResourceKey<Level>... dimensions){
-        OreFeaturesData.createOrePlacedFeature(domain, id, new FeltRuleTest(domain, id, test), range, weight, size, discardChance, List.of(dimensions), context -> true);
+        OreFeaturesData.createOrePlacedFeature(domain, id, new FeltBlockStateFunction(domain, id, test), range, weight, size, discardChance, List.of(dimensions), context -> true);
     }
 }

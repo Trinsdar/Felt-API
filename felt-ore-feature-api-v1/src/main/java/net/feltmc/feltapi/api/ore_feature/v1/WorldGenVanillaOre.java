@@ -1,0 +1,133 @@
+package net.feltmc.feltapi.api.ore_feature.v1;
+
+import net.minecraft.core.Holder;
+import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.block.state.BlockState;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.BiFunction;
+import java.util.function.Predicate;
+
+public class WorldGenVanillaOre  {
+    public final ResourceLocation id;
+    public final BiFunction<BlockState, RandomSource, BlockState> blockstateFunction;
+    public final int minY, maxY, weight, size, plateau;
+    public final float discardOnExposureChance;
+    public final List<ResourceLocation> dimensions;
+    public final List<String> biomes;
+
+    public final boolean biomeBlacklist, rare, triangle, spawnOnOceanFloor;
+
+    WorldGenVanillaOre(ResourceLocation id, BiFunction<BlockState, RandomSource, BlockState> blockstateFunction, float discardOnExposureChance, int minY, int maxY, int weight, int size, boolean rare, boolean triangle, int plateau, boolean spawnOnOceanFlor, List<ResourceLocation> dimensions, List<String> biomes, boolean biomeBlacklist){
+
+        this.id = id;
+        this.blockstateFunction = blockstateFunction;
+        this.discardOnExposureChance = discardOnExposureChance;
+        this.minY = minY;
+        this.maxY = maxY;
+        this.weight = weight;
+        this.size = size;
+        this.rare = rare;
+        this.triangle = triangle;
+        this.plateau = plateau;
+        this.spawnOnOceanFloor = spawnOnOceanFlor;
+        this.dimensions = dimensions;
+        this.biomes = biomes;
+        this.biomeBlacklist = biomeBlacklist;
+
+    }
+    public Predicate<Holder<Biome>> getValidBiomes() {
+        return b -> {
+            if (biomes.isEmpty()) return biomeBlacklist;
+            Predicate<String> predicate = s -> {
+                if (s.contains("#")) return b.is(TagKey.create(Registry.BIOME_REGISTRY, new ResourceLocation(s.replace("#", ""))));
+                return b.is(ResourceKey.create(Registry.BIOME_REGISTRY, new ResourceLocation(s)));
+            };
+            return biomeBlacklist ? biomes.stream().anyMatch(predicate) : biomes.stream().noneMatch(predicate);
+
+        };
+    }
+
+    /*public JsonObject toJson(){
+        JsonObject json = new JsonObject();
+        json.addProperty("primary", primary.getId());
+        if (materialType != AntimatterMaterialTypes.ORE) json.addProperty("materialType", materialType.getId());
+        if (secondary != Material.NULL) {
+            json.addProperty("secondary", secondary.getId());
+            json.addProperty("secondaryChance", secondaryChance);
+            if (secondaryType != materialType) json.addProperty("secondaryType", secondaryType.getId());
+        }
+        json.addProperty("discardOnExposureChance", discardOnExposureChance);
+        if (minY > Integer.MIN_VALUE) {
+            json.addProperty("minY", minY);
+        }
+        if (maxY < Integer.MAX_VALUE) {
+            json.addProperty("maxY", maxY);
+        }
+        json.addProperty("weight", weight);
+        json.addProperty("size", size);
+        if (rare) json.addProperty("rare", true);
+        if (triangle) json.addProperty("triangle", true);
+        if (plateau > 0) json.addProperty("plateau", plateau);
+        if (spawnOnOceanFloor) json.addProperty("spawnOnOceanFloor", true);
+        JsonArray array = new JsonArray();
+        getDims().forEach(r -> array.add(r.toString()));
+        if (!array.isEmpty()){
+            json.add("dims", array);
+        }
+        JsonArray array2 = new JsonArray();
+        biomes.forEach(array2::add);
+        if (!array2.isEmpty()){
+            json.add("biomes", array2);
+        }
+        json.addProperty("biomeBlacklist", biomeBlacklist);
+        return json;
+    }
+
+    public static WorldGenVanillaOre fromJson(String id, JsonObject json){
+        List<String> biomes = new ArrayList<>();
+        List<ResourceLocation> dims = new ArrayList<>();
+        if (json.has("biomes")){
+            JsonArray array = json.getAsJsonArray("biomes");
+            array.forEach(j -> {
+                if (j instanceof JsonPrimitive object){
+                    biomes.add(object.getAsString());
+                }
+            });
+        }
+        if (json.has("dims")){
+            JsonArray array = json.getAsJsonArray("dims");
+            array.forEach(j -> {
+                if (j instanceof JsonPrimitive object){
+                    dims.add(new ResourceLocation(object.getAsString()));
+                }
+            });
+        }
+        MaterialType<?> materialType = json.has("materialType") ? AntimatterAPI.get(MaterialType.class, json.get("materialType").getAsString()) : AntimatterMaterialTypes.ORE;
+        return new WorldGenVanillaOre(
+                id,
+                Material.get(json.get("primary").getAsString()),
+                json.has("secondary") ? Material.get(json.get("secondary").getAsString()) : Material.NULL,
+                materialType,
+                json.has("secondaryType") ? AntimatterAPI.get(MaterialType.class, json.get("secondaryType").getAsString()) : materialType,
+                json.has("secondaryChance") ? json.get("secondaryChance").getAsFloat() : 0.0f,
+                json.get("discardOnExposureChance").getAsFloat(),
+                json.has("minY") ? json.get("minY").getAsInt() : Integer.MIN_VALUE,
+                json.has("maxY") ? json.get("maxY").getAsInt() : Integer.MAX_VALUE,
+                json.get("weight").getAsInt(),
+                json.get("size").getAsInt(),
+                json.has("rare") && json.get("rare").getAsBoolean(),
+                json.has("triangle") && json.get("triangle").getAsBoolean(),
+                json.has("plateau") ? json.get("plateau").getAsInt() : 0,
+                json.has("spawnOnOceanFloor") && json.get("spawnOnOceanFloor").getAsBoolean(),
+                dims,
+                biomes,
+                json.get("biomeBlacklist").getAsBoolean());
+    }*/
+}
